@@ -1,0 +1,47 @@
+[
+  {
+    "from": "/old-about",
+    "to": "/about",
+    "status": 301,
+    "preserveQuery": true,
+    "caseSensitive": false
+  },
+  {
+    "from": "/blog/(.+)",
+    "to": "/articles/$1",
+    "status": 301,
+    "preserveQuery": true
+  },
+  {
+    "from": "/product/([0-9]+)",
+    "to": "/products/item-$1",
+    "status": 302,
+    "preserveQuery": true
+  },
+  {
+    "from": "/legacy/*",
+    "to": "/archive/$1",
+    "status": 301,
+    "preserveQuery": false
+  },
+  {
+    "from": "/support",
+    "to": "https://help.example.com",
+    "status": 302,
+    "preserveQuery": true
+  },
+  {
+    "domain": "book.carlosguerrero.com",
+    "from": "/",
+    "to": "https://calendar.app.google/6TBBkNxv1fH7etaj6",
+    "status": 301,
+    "preserveQuery": false
+  },
+  {
+    "domain": "old.example.com",
+    "from": "/*",
+    "to": "https://new.example.com/$1",
+    "status": 301,
+    "preserveQuery": true
+  }
+]
