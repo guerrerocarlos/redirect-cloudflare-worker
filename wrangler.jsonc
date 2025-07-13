@@ -40,7 +40,8 @@
 	 * https://developers.cloudflare.com/workers/wrangler/configuration/#routes
 	 */
 	"routes": [
-		"calendar.carlosguerrero.com/*"
+		"calendar.carlosguerrero.com/*",
+		"whatsapp.carlosguerrero.com/*"
 	],
 
 	/**

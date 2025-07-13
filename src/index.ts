@@ -63,6 +63,46 @@ const DEFAULT_REDIRECTS: RedirectRule[] = [
 		to: 'https://calendar.app.google/6TBBkNxv1fH7etaj6',
 		status: 301,
 		preserveQuery: false
+	},
+	// Calendar path redirect on main domain
+	{
+		domain: 'carlosguerrero.com',
+		from: '/calendar',
+		to: 'https://calendar.app.google/6TBBkNxv1fH7etaj6',
+		status: 301,
+		preserveQuery: false
+	},
+	// WhatsApp domain redirect
+	{
+		domain: 'whatsapp.carlosguerrero.com',
+		from: '/',
+		to: 'https://wa.me/qr/PVZTFJDU3YOPE1',
+		status: 301,
+		preserveQuery: false
+	},
+	// WhatsApp path redirect on main domain
+	{
+		domain: 'carlosguerrero.com',
+		from: '/whatsapp',
+		to: 'https://wa.me/qr/PVZTFJDU3YOPE1',
+		status: 301,
+		preserveQuery: false
+	},
+	// LinkedIn path redirect on main domain
+	{
+		domain: 'carlosguerrero.com',
+		from: '/linkedin',
+		to: 'https://www.linkedin.com/in/carlosguerrero-com/',
+		status: 301,
+		preserveQuery: false
+	},
+	// Main domain root redirect to CV subdomain
+	{
+		domain: 'carlosguerrero.com',
+		from: '/',
+		to: 'https://cv.carlosguerrero.com',
+		status: 301,
+		preserveQuery: false
 	}
 ];
 
