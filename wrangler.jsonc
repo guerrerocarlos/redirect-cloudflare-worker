@@ -35,14 +35,13 @@
 	},
 
 	/**
-	 * Custom Domains - Automatic domain mapping for the Worker
-	 * Custom domains automatically set up DNS records and SSL certificates
+	 * Custom Domains - Managed via GitHub Actions workflow
+	 * Custom domains are added during deployment using wrangler CLI
+	 * This automatically sets up DNS records and SSL certificates
 	 * https://developers.cloudflare.com/workers/configuration/routing/custom-domains/
+	 * 
+	 * Domains: calendar.carlosguerrero.com, whatsapp.carlosguerrero.com
 	 */
-	"custom_domains": [
-		"calendar.carlosguerrero.com",
-		"whatsapp.carlosguerrero.com"
-	],
 
 	/**
 	 * KV Namespaces - Removed (using hardcoded config only)
