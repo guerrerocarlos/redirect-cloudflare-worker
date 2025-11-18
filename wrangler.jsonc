@@ -31,7 +31,7 @@
 		"FORCE_HTTPS": "true",
 		"WWW_REDIRECT": "none",
 		"ADMIN_KEY": "",
-		"GIST_CONFIG_URL": "https://gist.githubusercontent.com/guerrerocarlos/76cfcca2a3cec827d833ca502c67fbf9/raw/redirects.json"
+		"GIST_CONFIG_URL": "https://gist.githubusercontent.com/guerrerocarlos/76cfcca2a3cec827d833ca502c67fbf9/raw"
 	},
 
 	/**
