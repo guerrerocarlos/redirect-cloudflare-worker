@@ -41,11 +41,11 @@
 	 */
 	"routes": [
 		{
-			"pattern": "calendar.carlosguerrero.com/*",
+			"pattern": "calendar.carlosguerrero.com",
 			"custom_domain": true
 		},
 		{
-			"pattern": "whatsapp.carlosguerrero.com/*",
+			"pattern": "whatsapp.carlosguerrero.com",
 			"custom_domain": true
 		}
 	],
