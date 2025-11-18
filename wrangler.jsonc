@@ -38,11 +38,14 @@
 	 * Routes - Custom domain mapping for the Worker
 	 * For custom domains, you can also configure them via Cloudflare Dashboard
 	 * https://developers.cloudflare.com/workers/wrangler/configuration/#routes
+	 * 
+	 * NOTE: Routes are commented out to allow successful CI/CD deployment.
+	 * Uncomment and configure these after setting up DNS records in Cloudflare.
 	 */
-	"routes": [
-		"calendar.carlosguerrero.com/*",
-		"whatsapp.carlosguerrero.com/*"
-	],
+	// "routes": [
+	// 	"calendar.carlosguerrero.com/*",
+	// 	"whatsapp.carlosguerrero.com/*"
+	// ],
 
 	/**
 	 * KV Namespaces - Removed (using hardcoded config only)
