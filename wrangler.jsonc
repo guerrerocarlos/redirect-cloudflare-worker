@@ -35,17 +35,14 @@
 	},
 
 	/**
-	 * Routes - Custom domain mapping for the Worker
-	 * For custom domains, you can also configure them via Cloudflare Dashboard
-	 * https://developers.cloudflare.com/workers/wrangler/configuration/#routes
-	 * 
-	 * NOTE: Routes are commented out to allow successful CI/CD deployment.
-	 * Uncomment and configure these after setting up DNS records in Cloudflare.
+	 * Custom Domains - Automatic domain mapping for the Worker
+	 * Custom domains automatically set up DNS records and SSL certificates
+	 * https://developers.cloudflare.com/workers/configuration/routing/custom-domains/
 	 */
-	// "routes": [
-	// 	"calendar.carlosguerrero.com/*",
-	// 	"whatsapp.carlosguerrero.com/*"
-	// ],
+	"custom_domains": [
+		"calendar.carlosguerrero.com",
+		"whatsapp.carlosguerrero.com"
+	],
 
 	/**
 	 * KV Namespaces - Removed (using hardcoded config only)
