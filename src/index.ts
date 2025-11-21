@@ -30,18 +30,18 @@ const CACHE_TTL = 300000; // 5 minutes in milliseconds
 // Fallback redirect rules - used if external config fails to load
 const DEFAULT_REDIRECTS: RedirectRule[] = [
 	// Example redirects - customize as needed
-	{
-		from: '/old-page',
-		to: '/new-page',
-		status: 301,
-		preserveQuery: true
-	},
-	{
-		from: '/blog/*',
-		to: '/articles/$1',
-		status: 301,
-		preserveQuery: true
-	},
+	// {
+	// 	from: '/old-page',
+	// 	to: '/new-page',
+	// 	status: 301,
+	// 	preserveQuery: true
+	// },
+	// {
+	// 	from: '/blog/*',
+	// 	to: '/articles/$1',
+	// 	status: 301,
+	// 	preserveQuery: true
+	// },
 	{
 		from: '/product/(.*)',
 		to: '/products/$1',
@@ -103,19 +103,26 @@ const DEFAULT_REDIRECTS: RedirectRule[] = [
 		to: 'https://cv.carlosguerrero.com',
 		status: 301,
 		preserveQuery: false
+	},
+	{
+		domain: 'carlosguerrero.com',
+		from: '/*',
+		to: 'https://www.carlosguerrero.com',
+		status: 301,
+		preserveQuery: false
 	}
 ];
 
 export default {
 	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
 		const url = new URL(request.url);
-		
+
 		// Force HTTPS redirect
 		if (url.protocol === 'http:' && env.FORCE_HTTPS !== 'false') {
 			url.protocol = 'https:';
 			return Response.redirect(url.toString(), 301);
 		}
-		
+
 		// WWW redirect handling
 		if (env.WWW_REDIRECT === 'remove' && url.hostname.startsWith('www.')) {
 			url.hostname = url.hostname.substring(4);
@@ -124,67 +131,67 @@ export default {
 			url.hostname = 'www.' + url.hostname;
 			return Response.redirect(url.toString(), 301);
 		}
-		
+
 		// Load redirect rules from external gist with caching and fallback to defaults
 		let redirectRules = DEFAULT_REDIRECTS;
-		const now = Date.now();
-		
+		// const now = Date.now();
+
 		// Check if we have cached rules that are still fresh
-		if (cachedRules && (now - cacheTimestamp) < CACHE_TTL) {
-			redirectRules = cachedRules;
-		} else {
-			// Try to fetch fresh rules from external source
-			if (env.GIST_CONFIG_URL) {
-				try {
-					const response = await fetch(env.GIST_CONFIG_URL);
-					if (response.ok) {
-						const externalRules = await response.json();
-						// Check if we got a valid array of rules
-						if (Array.isArray(externalRules) && externalRules.length > 0) {
-							redirectRules = externalRules;
-							cachedRules = externalRules;
-							cacheTimestamp = now;
-							console.log(`Loaded ${externalRules.length} redirect rules from external config`);
-						} else {
-							console.log('External config is empty or invalid, using fallback rules');
-							// Use cached rules if available, otherwise use defaults
-							redirectRules = cachedRules || DEFAULT_REDIRECTS;
-						}
-					} else {
-						console.error(`Failed to fetch external config: ${response.status}`);
-						// Use cached rules if available, otherwise use defaults
-						redirectRules = cachedRules || DEFAULT_REDIRECTS;
-					}
-				} catch (error) {
-					console.error('Error loading external config:', error);
-					console.log('Using cached or default redirect rules');
-					// Use cached rules if available, otherwise use defaults
-					redirectRules = cachedRules || DEFAULT_REDIRECTS;
-				}
-			} else {
-				console.log('No GIST_CONFIG_URL configured, using default redirect rules');
-				redirectRules = cachedRules || DEFAULT_REDIRECTS;
-			}
-		}
-		
+		// if (cachedRules && (now - cacheTimestamp) < CACHE_TTL) {
+		// 	redirectRules = cachedRules;
+		// } else {
+		// 	// Try to fetch fresh rules from external source
+		// 	if (env.GIST_CONFIG_URL) {
+		// 		try {
+		// 			const response = await fetch(env.GIST_CONFIG_URL);
+		// 			if (response.ok) {
+		// 				const externalRules = await response.json();
+		// 				// Check if we got a valid array of rules
+		// 				if (Array.isArray(externalRules) && externalRules.length > 0) {
+		// 					redirectRules = externalRules;
+		// 					cachedRules = externalRules;
+		// 					cacheTimestamp = now;
+		// 					console.log(`Loaded ${externalRules.length} redirect rules from external config`);
+		// 				} else {
+		// 					console.log('External config is empty or invalid, using fallback rules');
+		// 					// Use cached rules if available, otherwise use defaults
+		// 					redirectRules = cachedRules || DEFAULT_REDIRECTS;
+		// 				}
+		// 			} else {
+		// 				console.error(`Failed to fetch external config: ${response.status}`);
+		// 				// Use cached rules if available, otherwise use defaults
+		// 				redirectRules = cachedRules || DEFAULT_REDIRECTS;
+		// 			}
+		// 		} catch (error) {
+		// 			console.error('Error loading external config:', error);
+		// 			console.log('Using cached or default redirect rules');
+		// 			// Use cached rules if available, otherwise use defaults
+		// 			redirectRules = cachedRules || DEFAULT_REDIRECTS;
+		// 		}
+		// 	} else {
+		// 		console.log('No GIST_CONFIG_URL configured, using default redirect rules');
+		// 		redirectRules = cachedRules || DEFAULT_REDIRECTS;
+		// 	}
+		// }
+
 		// Check for matching redirect rules
 		for (const rule of redirectRules) {
 			// Check if rule has domain restriction and if it matches
 			if (rule.domain && rule.domain !== url.hostname) {
 				continue; // Skip this rule if domain doesn't match
 			}
-			
+
 			const match = matchPath(url.pathname, rule.from, rule.caseSensitive !== false);
-			
+
 			if (match) {
 				let redirectTo = rule.to;
-				
+
 				// Handle wildcard replacements
 				redirectTo = redirectTo.replace(/\$(\d+)/g, (_, index) => {
 					const captureIndex = parseInt(index) - 1;
 					return match.captures[captureIndex] || '';
 				});
-				
+
 				// Build the final redirect URL
 				let redirectUrl: URL;
 				try {
@@ -194,17 +201,17 @@ export default {
 					// If it's a relative path, resolve it against the current origin
 					redirectUrl = new URL(redirectTo, url.origin);
 				}
-				
+
 				// Preserve query parameters if specified
 				if (rule.preserveQuery !== false && url.search) {
 					redirectUrl.search = url.search;
 				}
-				
+
 				const status = rule.status || 301;
 				return Response.redirect(redirectUrl.toString(), status);
 			}
 		}
-		
+
 		// Health check endpoint
 		if (url.pathname === '/health') {
 			return new Response(JSON.stringify({
@@ -215,18 +222,18 @@ export default {
 				headers: { 'Content-Type': 'application/json' }
 			});
 		}
-		
+
 		// Admin endpoint to view current redirect rules
 		if (url.pathname === '/admin/rules' && request.method === 'GET') {
 			if (env.ADMIN_KEY && request.headers.get('Authorization') !== `Bearer ${env.ADMIN_KEY}`) {
 				return new Response('Unauthorized', { status: 401 });
 			}
-			
+
 			return new Response(JSON.stringify(redirectRules, null, 2), {
 				headers: { 'Content-Type': 'application/json' }
 			});
 		}
-		
+
 		// Default response for unmatched requests
 		return new Response(`
 			<html>
@@ -263,21 +270,21 @@ function matchPath(path: string, pattern: string, caseSensitive: boolean = true)
 	let regexPattern = pattern
 		.replace(/\*/g, '(.*)')
 		.replace(/\//g, '\\/');
-	
+
 	// Handle regex patterns (already contain parentheses)
 	if (pattern.includes('(') && pattern.includes(')')) {
 		regexPattern = pattern;
 	}
-	
+
 	const flags = caseSensitive ? '' : 'i';
 	const regex = new RegExp(`^${regexPattern}$`, flags);
-	
+
 	const match = path.match(regex);
 	if (match) {
 		return {
 			captures: match.slice(1) // Remove the full match, keep only captures
 		};
 	}
-	
+
 	return null;
 }

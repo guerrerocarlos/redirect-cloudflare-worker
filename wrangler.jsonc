@@ -41,6 +41,10 @@
 	 */
 	"routes": [
 		{
+			"pattern": "carlosguerrero.com",
+			"custom_domain": true
+		},
+		{
 			"pattern": "calendar.carlosguerrero.com",
 			"custom_domain": true
 		},
