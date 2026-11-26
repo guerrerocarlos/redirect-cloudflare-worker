@@ -96,20 +96,20 @@ const DEFAULT_REDIRECTS: RedirectRule[] = [
 		status: 301,
 		preserveQuery: false
 	},
-	// Main domain root redirect to CV subdomain
+	// Canonical public-site redirect for the apex domain.
 	{
 		domain: 'carlosguerrero.com',
 		from: '/',
-		to: 'https://cv.carlosguerrero.com',
+		to: 'https://www.carlosguerrero.com/',
 		status: 301,
-		preserveQuery: false
+		preserveQuery: true
 	},
 	{
 		domain: 'carlosguerrero.com',
 		from: '/*',
-		to: 'https://www.carlosguerrero.com',
+		to: 'https://www.carlosguerrero.com/$1',
 		status: 301,
-		preserveQuery: false
+		preserveQuery: true
 	}
 ];
 
