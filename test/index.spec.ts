@@ -139,7 +139,7 @@ describe('Redirect Cloudflare Worker', () => {
 		await waitOnExecutionContext(ctx);
 		
 		expect(response.status).toBe(301);
-		expect(response.headers.get('Location')).toBe('https://calendar.app.google/6TBBkNxv1fH7etaj6');
+		expect(response.headers.get('Location')).toBe('https://calendar.app.google/NEgxhpcjb5gBry2dA');
 	});
 
 	// Integration tests using SELF

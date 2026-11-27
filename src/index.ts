@@ -68,7 +68,7 @@ const DEFAULT_REDIRECTS: RedirectRule[] = [
 	{
 		domain: 'carlosguerrero.com',
 		from: '/calendar',
-		to: 'https://calendar.app.google/6TBBkNxv1fH7etaj6',
+		to: 'https://calendar.app.google/NEgxhpcjb5gBry2dA',
 		status: 301,
 		preserveQuery: false
 	},
